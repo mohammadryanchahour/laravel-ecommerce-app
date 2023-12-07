@@ -1,59 +1,63 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->isAdmin) {
-            $users = User::all();
-            return response()->json(['users' => $users]);
-        } else {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        $users = User::all();
+        return response()->json(['users' => $users], 200);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
         ]);
 
         $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'isAdmin' => $request->isAdmin ?? false,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'isAdmin' => $request->isAdmin ?? false,
         ]);
 
-        return response()->json(['user' => $user, 'message' => 'User created'], 201);
+        return response()->json(['user' => $user, 'message' => 'User Created Successfully!'], 201);
     }
 
-
-    public function show(User $user)
+    public function show($id)
     {
-        return response()->json(['user'=> $user]); // Returns user data
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        return response()->json(['user' => $user], 200);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $user = User::findOrFail($id);
+        $user->update($request->all());
 
-        return response()->json(['message' => 'User Updated'], 200);
+        return response()->json(['message' => 'User Updated Successfully!'], 200);
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request, $id)
     {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
         $user->delete(); // Deletes the user
-        return response()->json(['message' => 'User deleted']);
+        return response()->json(['message' => 'User Deleted Successfully!'], 200);
     }
 }
