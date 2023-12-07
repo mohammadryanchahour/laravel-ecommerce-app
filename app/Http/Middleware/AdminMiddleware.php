@@ -19,6 +19,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return redirect('/')->with('error', 'You are not authorized to access this page.');
     }
 }
