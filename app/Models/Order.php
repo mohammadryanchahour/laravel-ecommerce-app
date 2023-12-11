@@ -11,10 +11,10 @@ class Order extends Model
 
     protected $fillable = ['status', 'total_amount', 'billing_address', 'shipping_address', 'payment_method', 'notes' ];
 
-    protected $casts = [
-        'status' => 'string',
-        'payment_method' => 'string',
-    ];
+    // protected $casts = [
+    //     'status' => 'string',
+    //     'payment_method' => 'string',
+    // ];
 
     public function user()
     {

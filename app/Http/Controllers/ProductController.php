@@ -23,8 +23,8 @@ class ProductController extends Controller
             $request->validate([
                 'name' => 'required',
                 'description' => 'required',
-                'price' =>'required',
-                'stock' =>'required',
+                // 'price' =>'required',
+                // 'stock' =>'required',
             ]);
 
             $product = Product::create([

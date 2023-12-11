@@ -40,7 +40,6 @@ class OrderController extends Controller
                 'products' => 'required|array',
                 'products.*.id' => 'required|exists:products,id',
                 'products.*.quantity' => 'required|integer|min:1',
-                'products.*.price_at_purchase' => 'required|integer',
                 'billing_address' => 'nullable|string',
                 'shipping_address' => 'required|string',
                 'payment_method' => 'required|in:card,stripe,cash', 
@@ -51,6 +50,8 @@ class OrderController extends Controller
 
             // Create the Order instance
             $order = $user->orders()->create([
+                'status' => $request->input('status'),
+                'total_amount' => $request->input('total_amount'),
                 'billing_address' => $request->input('billing_address'),
                 'shipping_address' => $request->input('shipping_address'),
                 'payment_method' => $request->input('payment_method'),
