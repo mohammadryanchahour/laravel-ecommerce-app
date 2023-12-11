@@ -44,9 +44,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-        'admin' => [
-            \App\Http\Middleware\AdminMiddleware::class,
-        ],
+        // 'admin' => [
+        //     \App\Http\Middleware\AdminMiddleware::class,
+        // ],
     ];
 
     /**
@@ -69,4 +69,11 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+    
+    protected $routeMiddleware = [
+        // ... Other middleware entries
+    
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    ];
+    
 }

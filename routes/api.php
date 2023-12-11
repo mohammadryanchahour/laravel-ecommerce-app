@@ -8,6 +8,8 @@ use App\Http\Controllers\AuthController;
 require __DIR__.'/user.php';
 require __DIR__.'/role.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/product.php';
+require __DIR__.'/product_image.php';
 
 // Route::middleware('auth:sanctum')->get('user', function(Request $request){
 //     return $request->user();
