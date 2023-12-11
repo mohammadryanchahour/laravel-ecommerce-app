@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->isAdmin; // Example, assuming isAdmin is a property in the User model
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     // User.php
 
     // public function roles()

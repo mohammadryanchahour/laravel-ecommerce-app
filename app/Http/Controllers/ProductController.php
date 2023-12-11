@@ -22,12 +22,16 @@ class ProductController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'description' => 'required'
+                'description' => 'required',
+                'price' =>'required',
+                'stock' =>'required',
             ]);
 
             $product = Product::create([
                 'name' => $request->name,
                 'description' => $request->description,
+                'price' => $request->price,
+                'stock' => $request->stock
             ]);
 
             return response()->json(['Product' => $product, 'message' => 'Product Created Successfully!'], 200);

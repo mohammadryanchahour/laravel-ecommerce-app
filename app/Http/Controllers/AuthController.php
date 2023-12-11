@@ -25,9 +25,10 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'isAdmin' => $request->isAdmin ?? false
         ]);
 
-        return response()->json(['user' => $user, 'message' => 'User created'], 201);
+        return response()->json(['user' => $user, 'message' => 'User created Succesfully'], 201);
     }
 
     public function login(Request $request)

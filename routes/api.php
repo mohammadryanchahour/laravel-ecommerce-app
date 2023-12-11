@@ -10,6 +10,7 @@ require __DIR__.'/role.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/product.php';
 require __DIR__.'/product_image.php';
+require __DIR__.'/order.php';
 
 // Route::middleware('auth:sanctum')->get('user', function(Request $request){
 //     return $request->user();
