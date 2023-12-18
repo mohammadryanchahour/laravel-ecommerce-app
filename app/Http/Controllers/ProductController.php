@@ -10,7 +10,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::all();
+            $products = Product::with('images')->get();
             return response()->json(['Products' => $products], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch products: ' . $e->getMessage()], 500);
@@ -25,13 +25,15 @@ class ProductController extends Controller
                 'description' => 'required',
                 // 'price' =>'required',
                 // 'stock' =>'required',
+                'category' =>'required',
             ]);
 
             $product = Product::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'price' => $request->price,
-                'stock' => $request->stock
+                'stock' => $request->stock,
+                'category' => $request->category,
             ]);
 
             return response()->json(['Product' => $product, 'message' => 'Product Created Successfully!'], 200);
@@ -43,7 +45,7 @@ class ProductController extends Controller
     public function show($id)
     {
         try {
-            $product = Product::findOrFail($id);
+            $product = Product::with('images')->findOrFail($id);
             return response()->json(['Product' => $product], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch product: ' . $e->getMessage()], 500);
@@ -63,6 +65,9 @@ class ProductController extends Controller
             $product->update([
                 'name' => $request->name,
                 'description' => $request->description,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'category' => $request->category,
             ]);
 
             return response()->json(['Updated Product' => $product, 'message' => 'Product Updated Successfully!'], 200);
